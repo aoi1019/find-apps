@@ -25,6 +25,9 @@
           <%= f.text_field :period, class: 'form-control', id: 'app_period' %>
         </div>
         <%= f.submit "更新する", class: "btn btn-primary" %>
+        <p></p>
+        <%= link_to "料理を削除する", dish_path(@dish), method: :delete,
+                             data: { confirm: "本当にこのアプリを削除してよろしいですか？" } %>
       <% end %>
     </div>
   </div>
