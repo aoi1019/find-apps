@@ -1,5 +1,6 @@
 class AppsController < ApplicationController
   before_action :logged_in_user
+  before_action :correct_user, only: [:edit, :update]
 
   def new
     @app = App.new
@@ -36,5 +37,10 @@ class AppsController < ApplicationController
   private
     def app_params
       params.require(:app).permit(:name, :description, :point, :period, :reference)
+    end
+
+    def correct_user
+      @app = current_user.apps.find_by(id: params[:id])
+      redirect_to root_url if @app.nil?
     end
 end

@@ -5,8 +5,6 @@ RSpec.describe "Apps", type: :system do
     @user = FactoryBot.create(:user)
     @app = FactoryBot.create(:app)
   end
-  # let!(:user) { create(:user) }
-  # let!(:app) { create(:app, user: user) }
 
   describe "アプリ登録ページ" do
     before do
@@ -34,7 +32,7 @@ RSpec.describe "Apps", type: :system do
 
     context "アプリ登録処理" do
       it "有効な情報でアプリ登録を行うとアプリ登録成功のフラッシュが表示されること" do
-        fill_in "アプリ名", with: "イカの塩焼き"
+        fill_in "アプリ名", with: "アプリ"
         fill_in "説明", with: "オリジナルアプリです"
         fill_in "技術的ポイント", with: "Ruby on Railsで開発"
         fill_in "アプリURL", with: "https://find-apps.herokuapp.com/"
@@ -71,6 +69,52 @@ RSpec.describe "Apps", type: :system do
         expect(page).to have_content @app.point
         expect(page).to have_content @app.reference
         expect(page).to have_content @app.period
+      end
+    end
+  end
+  
+  describe "アプリ編集ページ" do
+    before do
+      login_for_system(@user)
+      visit edit_app_path(@app)
+      # click_link "編集"
+    end
+
+    context "ページレイアウト" do
+      it "正しいタイトルが表示されること" do
+        expect(page).to have_title full_title('アプリ情報の編集')
+      end
+
+      it "入力部分に適切なラベルが表示されること" do
+        expect(page).to have_content 'アプリ名'
+        expect(page).to have_content '説明'
+        expect(page).to have_content '技術的ポイント'
+        expect(page).to have_content 'アプリURL'
+        expect(page).to have_content '開発日数'
+      end
+    end
+
+    context "アプリの更新処理" do
+      it "有効な更新" do
+        fill_in "アプリ名", with: "編集：アプリ"
+        fill_in "説明", with: "編集：オリジナルアプリです"
+        fill_in "技術的ポイント", with: "編集：Ruby on Railsで開発"
+        fill_in "アプリURL", with: "henshu-https://find-apps.herokuapp.com/"
+        fill_in "開発日数", with: 60
+        click_button "更新する"
+        expect(page).to have_content "アプリ情報が更新されました！"
+        expect(@app.reload.name).to eq "編集：アプリ"
+        expect(@app.reload.description).to eq "編集：オリジナルアプリです"
+        expect(@app.reload.point).to eq "編集：Ruby on Railsで開発"
+        expect(@app.reload.reference).to eq "henshu-https://find-apps.herokuapp.com/"
+        expect(@app.reload.period).to eq 60
+      end
+
+      it "無効な更新" do
+        fill_in "アプリ名", with: ""
+        click_button "更新する"
+        expect(page).to have_content 'アプリ名を入力してください'
+        expect(@app.reload.name).not_to eq ""
       end
     end
   end

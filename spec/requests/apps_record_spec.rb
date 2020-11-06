@@ -8,13 +8,14 @@ RSpec.describe "アプリ登録", type: :request do
 
   context "ログインしているユーザーの場合" do
     before do
-      login_for_request(@user)
       get new_app_path
+      login_for_request(@user)
     end
 
-    it "レスポンスが正常に表示されること" do
-      expect(response.status).to eq 200
-      expect(response).to render_template('apps/new')
+    context 'フレンドリーフォワーディング' do
+      it "レスポンスが正常に表示されること" do
+        expect(response).to redirect_to new_app_url
+      end
     end
     it "有効なアプリデータで登録できること" do
       expect {
