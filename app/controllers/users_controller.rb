@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :logged_in_user, only: [:index, :show, :edit, :update]
+  before_action :logged_in_user, only: [:index, :show, :edit, :update, :destroy]
   before_action :correct_user,   only: [:edit, :update]
 
   def new
@@ -39,6 +39,12 @@ class UsersController < ApplicationController
     end
   end
 
+  def destroy
+    @user.destroy
+    flash[:success] = "アカウントを削除しました"
+    redirect_to root_url
+  end
+
   private
 
     def user_params
@@ -57,5 +63,4 @@ class UsersController < ApplicationController
         redirect_to(root_url)
       end
     end
-
 end
