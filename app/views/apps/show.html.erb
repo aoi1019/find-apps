@@ -1,0 +1,17 @@
+<% provide(:title, "#{@app.name}") %>
+<div class="container">
+  <div class="row">
+    <h2 class="app-name"><%= @app.name %></h2>
+    <h4><%= @app.description %></h4>
+    <h4 class="app-reference">アプリURL：<%= link_to "#{@app.reference}", @app.reference, target: "_blank" %></h4>
+    <div class="point">
+      <h5 class="title-point">技術的ポイント</h5>
+      <h5><%= @app.point %></h5>
+    </div>
+    <div class="show-app-other-info">
+      <div class="app-info">
+        <h5>所要時間：</h5><h4><%= @app.period %></h4> <h5>分</h5>
+      </div>
+    </div>
+  </div>
+</div>

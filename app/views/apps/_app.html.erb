@@ -1,6 +1,6 @@
 <li id="app-<%= app.id %>">
   <%= link_to gravatar_for(app.user, size: 50), app.user %>
-  <span class="name"><%= link_to app.name, "#" %></span>
+  <span class="name"><%= link_to app.name, app_path(app) %></span>
   <span class="description"><%= app.description %></span><br>
   <span class="period">開発日数：<%= app.period %>日　</span>
   <span class="point">ポイント：<%= app.point %></span><br>

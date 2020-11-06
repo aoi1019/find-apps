@@ -9,10 +9,14 @@ class AppsController < ApplicationController
     @app = current_user.apps.build(app_params)
     if @app.save
       flash[:success] = "アプリが登録されました！"
-      redirect_to root_path
+      redirect_to app_path(@app)
     else
       render :new
     end
+  end
+
+  def show
+    @app = App.find(params[:id])
   end
 
   private
