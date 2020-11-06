@@ -1,19 +1,40 @@
 require "rails_helper"
 
 RSpec.describe "アプリ登録", type: :request do
-
   before do
     @user = FactoryBot.create(:user)
-    # @app = FactoryBot.create(:app)
+    @app = FactoryBot.create(:app)
   end
-  # let!(:user) { create(:user) }
-  # let!(:app) { create(:app, user: user) }
 
   context "ログインしているユーザーの場合" do
-    it "レスポンスが正常に表示されること" do
+    before do
       login_for_request(@user)
       get new_app_path
+    end
+
+    it "レスポンスが正常に表示されること" do
       expect(response.status).to eq 200
+      expect(response).to render_template('apps/new')
+    end
+    it "有効なアプリデータで登録できること" do
+      expect {
+        post apps_path, params: { app: {  name: "アプリ",
+                                          description: "オリジナルアプリです",
+                                          point: "Ruby on Railsで開発",
+                                          reference: "https://find-apps.herokuapp.com/",
+                                          period: 30} }
+      }.to change(App, :count).by(1)
+      follow_redirect!
+      expect(response).to render_template('static_pages/home')
+    end
+    it "無効なアプリデータでは登録できないこと" do
+      expect {
+        post apps_path, params: { app: {  name: "",
+                                          description: "オリジナルアプリです",
+                                          point: "Ruby on Railsで開発",
+                                          reference: "https://find-apps.herokuapp.com/",
+                                          period: 30} }
+      }.not_to change(App, :count)
       expect(response).to render_template('apps/new')
     end
   end

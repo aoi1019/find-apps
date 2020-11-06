@@ -8,7 +8,7 @@ class AppsController < ApplicationController
   def create
     @app = current_user.apps.build(app_params)
     if @app.save
-      flash[:success] = "アプリの投稿が完了しました！"
+      flash[:success] = "アプリが登録されました！"
       redirect_to root_path
     else
       render :new
