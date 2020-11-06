@@ -31,6 +31,16 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
+    if @user.update_attributes(user_params_update)
+      flash[:success] = "プロフィールが更新されました！"
+      redirect_to @user
+    else
+      render 'edit'
+    end
+  end
+
+  def destroy
+    @user = User.find(params[:id])
     if current_user.admin?
       @user.destroy
       flash[:success] = "ユーザーの削除に成功しました"
@@ -43,12 +53,6 @@ class UsersController < ApplicationController
       flash[:danger] = "他人のアカウントは削除できません"
       redirect_to root_url
     end
-  end
-
-  def destroy
-    @user.destroy
-    flash[:success] = "アカウントを削除しました"
-    redirect_to root_url
   end
 
   private
