@@ -2,6 +2,11 @@
 <div class="container">
   <div class="row">
     <h2 class="app-name"><%= @app.name %></h2>
+    <div class="change-app">
+      <% if current_user == @app.user %>
+        <%= link_to "編集", edit_app_path(@app), class: 'edit-app' %>　
+      <% end %>
+    </div>
     <h4><%= @app.description %></h4>
     <h4 class="app-reference">アプリURL：<%= link_to "#{@app.reference}", @app.reference, target: "_blank" %></h4>
     <div class="point">

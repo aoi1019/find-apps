@@ -19,6 +19,20 @@ class AppsController < ApplicationController
     @app = App.find(params[:id])
   end
 
+  def edit
+    @app = App.find(params[:id])
+  end
+
+  def update
+    @app = App.find(params[:id])
+    if @app.update(app_params)
+      flash[:success] = "アプリ情報が更新されました！"
+      redirect_to @app
+    else
+      render :edit
+    end
+  end
+
   private
     def app_params
       params.require(:app).permit(:name, :description, :point, :period, :reference)
