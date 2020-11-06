@@ -25,7 +25,7 @@ RSpec.describe "アプリ登録", type: :request do
                                           period: 30} }
       }.to change(App, :count).by(1)
       follow_redirect!
-      expect(response).to render_template('static_pages/home')
+      expect(response).to render_template('apps/show')
     end
     it "無効なアプリデータでは登録できないこと" do
       expect {
