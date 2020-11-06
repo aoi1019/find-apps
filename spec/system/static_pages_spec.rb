@@ -19,10 +19,10 @@ RSpec.describe "StaticPages", type: :system do
         before do
           @user = FactoryBot.create(:user)
           @app = FactoryBot.create(:app, user: @user)
+          login_for_system(@user)
         end
 
         it "アプリのぺージネーションが表示されること" do
-          login_for_system(@user)
           create_list(:app, 6, user: @user)
           visit root_path
           expect(page).to have_content("アプリ一覧 (#{@user.apps.count})")
@@ -30,6 +30,10 @@ RSpec.describe "StaticPages", type: :system do
           App.take(5).each do |d|
             expect(page).to have_link d.name
           end
+        end
+        it "「新しいアプリを作る」リンクが表示されること" do
+          visit root_path
+          expect(page).to have_link "新しいアプリを投稿", href: new_app_path
         end
       end
     end
