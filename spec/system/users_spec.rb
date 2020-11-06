@@ -50,6 +50,7 @@ RSpec.describe "Users", type: :system do
         expect(page).to have_title full_title('ユーザー登録')
       end
     end
+
     context "ユーザー登録処理" do
       it "有効なユーザーでユーザー登録を行うとユーザー登録成功のフラッシュが表示されること" do
         fill_in "ユーザー名", with: "Example User"
@@ -59,7 +60,7 @@ RSpec.describe "Users", type: :system do
         click_button "登録する"
         expect(page).to have_content "FindAppsへようこそ！"
       end
-   
+
       it "無効なユーザーでユーザー登録を行うとユーザー登録失敗のフラッシュが表示されること" do
         fill_in "ユーザー名", with: ""
         fill_in "メールアドレス", with: "user@example.com"
@@ -84,7 +85,7 @@ RSpec.describe "Users", type: :system do
         expect(page).to have_title full_title('プロフィール編集')
       end
     end
-      
+
       it "有効なプロフィール更新を行うと、更新成功のフラッシュが表示されること" do
         fill_in "ユーザー名", with: "Edit Example User"
         fill_in "メールアドレス", with: "edit-user@example.com"
@@ -95,7 +96,7 @@ RSpec.describe "Users", type: :system do
         expect(user.reload.email).to eq "edit-user@example.com"
         expect(user.reload.profile).to eq "編集：初めまして"
       end
-      
+
       it "無効なプロフィール更新をしようとすると、適切なエラーメッセージが表示されること" do
         fill_in "ユーザー名", with: ""
         fill_in "メールアドレス", with: ""
@@ -120,15 +121,15 @@ RSpec.describe "Users", type: :system do
         login_for_system(user)
         visit user_path(user)
       end
- 
+
       it "「プロフィール」の文字列が存在することを確認" do
         expect(page).to have_content 'プロフィール'
       end
- 
+
       it "正しいタイトルが表示されることを確認" do
         expect(page).to have_title full_title('プロフィール')
       end
-  
+
       it "ユーザー情報が表示されることを確認" do
         expect(page).to have_content user.name
         expect(page).to have_content user.profile
