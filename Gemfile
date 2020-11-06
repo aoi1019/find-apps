@@ -70,4 +70,4 @@ group :production do
 end
 
 gem 'devise'
-gem 'bootstrap-sass'  
+gem 'bootstrap-sass'
