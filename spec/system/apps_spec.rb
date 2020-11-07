@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "Apps", type: :system do
   before do
     @user = FactoryBot.create(:user)
-    @app = FactoryBot.create(:app, user: @user)
+    @app = FactoryBot.create(:app, :picture, user: @user)
   end
 
   describe 'アプリ登録ページ' do
@@ -37,6 +37,7 @@ RSpec.describe "Apps", type: :system do
         fill_in 'app_point', with: @app.point
         fill_in 'app_reference', with: @app.reference
         fill_in 'app_period', with: @app.period
+        attach_file "app[picture]", "#{Rails.root}/spec/fixtures/mac.jpg"
         expect {
           find('input[name="commit"]').click
         }.to change(App, :count).by(1)
@@ -82,6 +83,7 @@ RSpec.describe "Apps", type: :system do
         expect(page).to have_content(@app.point)
         expect(page).to have_content(@app.period)
         expect(page).to have_content(@app.reference)
+        expect(page).to have_link nil, href: app_path(@app), class: 'app-picture'
       end
     end
 
@@ -123,7 +125,9 @@ RSpec.describe "Apps", type: :system do
         fill_in 'app_point', with: @app.point
         fill_in 'app_reference', with: @app.reference
         fill_in 'app_period', with: @app.period
+        attach_file "app[picture]", "#{Rails.root}/spec/fixtures/mac2.jpg"
         click_button '更新する'
+        expect(@app.reload.picture.url).to include "mac2.jpg"
         expect(current_path).to eq app_path(@app)
       end
 

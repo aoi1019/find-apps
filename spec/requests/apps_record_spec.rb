@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "アプリ登録", type: :request do
+  let(:picture_path) { File.join(Rails.root, 'spec/fixtures/mac.jpg') }
+  let(:picture) { Rack::Test::UploadedFile.new(picture_path) }
   before do
     @user = FactoryBot.create(:user)
     @app = FactoryBot.create(:app)
@@ -24,7 +26,8 @@ RSpec.describe "アプリ登録", type: :request do
                                           description: "オリジナルアプリです",
                                           point: "Ruby on Railsで開発",
                                           reference: "https://find-apps.herokuapp.com/",
-                                          period: 30 } }
+                                          period: 30,
+                                          picture: picture } }
       }.to change(App, :count).by(1)
       follow_redirect!
       expect(response).to render_template('apps/show')
@@ -35,7 +38,8 @@ RSpec.describe "アプリ登録", type: :request do
                                           description: "オリジナルアプリです",
                                           point: "Ruby on Railsで開発",
                                           reference: "https://find-apps.herokuapp.com/",
-                                          period: 30 } }
+                                          period: 30,
+                                          picture: picture } }
       }.not_to change(App, :count)
       expect(response).to render_template('apps/new')
     end

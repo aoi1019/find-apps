@@ -1,6 +1,8 @@
 require "rails_helper"
 
 RSpec.describe "アプリ編集", type: :request do
+  let(:picture2_path) { File.join(Rails.root, 'spec/fixtures/mac2.jpg') }
+  let(:picture2) { Rack::Test::UploadedFile.new(picture2_path) }
   before do
     @user = FactoryBot.create(:user)
     @app = FactoryBot.create(:app)
@@ -16,7 +18,8 @@ RSpec.describe "アプリ編集", type: :request do
                                              description: "オリジナルアプリです",
                                              point: "Ruby on Railsで開発",
                                              reference: "https://find-apps.herokuapp.com/",
-                                             period: 30 } }
+                                             period: 30,
+                                             picture: picture2 } }
       redirect_to @app
       follow_redirect!
     end
@@ -32,7 +35,8 @@ RSpec.describe "アプリ編集", type: :request do
                                              description: "オリジナルアプリです",
                                              tips: "Ruby on Railsで開発",
                                              reference: "https://find-apps.herokuapp.com/",
-                                             period: 30 } }
+                                             period: 30,
+                                             picture: picture2 } }
       expect(response).to have_http_status "302"
       expect(response).to redirect_to root_path
     end
@@ -47,7 +51,8 @@ RSpec.describe "アプリ編集", type: :request do
                                              description: "オリジナルアプリです",
                                              point: "Ruby on Railsで開発",
                                              reference: "https://find-apps.herokuapp.com/",
-                                             period: 30 } }
+                                             period: 30,
+                                             picture: picture2 } }
       expect(response).to have_http_status "302"
       expect(response).to redirect_to login_path
     end
