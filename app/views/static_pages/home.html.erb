@@ -1,5 +1,19 @@
-<center>
-  <h1>FindAppsへようこそ！</h1>
-  <h2>オリジナルアプリ作りませんか？</h2>
-  <p>今日から始めよう！</p>
-</center>
+<% if logged_in? %>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9">
+        <h3>アプリ一覧 (<%= @feed_items.count %>)</h3>
+        <%= render 'shared/feed' %>
+      </div>
+      <div class="col-md-3">
+        <p><%= link_to "新しいアプリを投稿", new_app_path, class: "btn btn-primary btn-lg btn-record" %></p>
+  	  </div>
+    </div>
+  </div>
+<% else %>
+  <center>
+    <h1>クックログへようこそ！</h1>
+    <h2>あなたのお料理(クック)ログ、作りませんか？</h2>
+    <p>今日のレシピ、もう迷わない！</p>
+  </center>
+<% end %>

@@ -40,6 +40,7 @@ RSpec.describe "Sessions", type: :system do
         expect(page).to have_button 'ログイン'
       end
     end
+
     context "ログイン処理" do
       it "無効なユーザーでログインを行うとログインが失敗することを確認" do
         fill_in "user_email", with: "user@example.com"

@@ -13,3 +13,12 @@ User.create!(name:  name,
     password:              password,
     password_confirmation: password)
 end
+
+10.times do |n|
+  App.create!(name: "インスタグラム",
+               description: "オリジナルアプリです",
+               point: "ピリッと辛めに味付けするのがオススメ",
+               reference: "https://find-apps.herokuapp.com/",
+               period: 30,
+               user_id: 1)
+end
