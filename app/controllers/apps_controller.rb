@@ -39,12 +39,13 @@ class AppsController < ApplicationController
     if current_user.admin? || current_user?(@app.user)
       @app.destroy
       flash[:success] = "アプリが削除されました"
-      redirect_to request.referrer == user_url(@app.user) ? user_url(@app.user) : root_path
+      redirect_to request.referrer == user_url(@app.user) ? user_url(@app.user) : root_url
     else
       flash[:danger] = "他人のアプリは削除できません"
-      redirect_to root_path
+      redirect_to root_url
     end
   end
+
 
   private
     def app_params

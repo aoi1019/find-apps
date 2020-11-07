@@ -5,7 +5,8 @@
     <div class="change-app">
       <% if current_user == @app.user %>
         <%= link_to "編集", edit_app_path(@app), class: 'edit-app' %>　
-        <% if current_user.admin? || (current_user == @app.user) %>
+      <% end %>
+      <% if current_user.admin? || (current_user == @app.user) %>
         <%= link_to "削除", app_path(@app), method: :delete, class: 'delete-app',
                                       data: { confirm: "本当に削除しますか？" } %>
       <% end %>

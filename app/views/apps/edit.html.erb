@@ -5,7 +5,7 @@
       <%= form_for(@app) do |f| %>
         <%= render 'shared/error_messages', object: f.object %>
         <div class = 'form-group'>
-          <%= f.label :name %>　<span class="input-need"><b>※必須</b></span>
+          <%= f.label :name %>　<span class="input-need">※必須</span>
           <%= f.text_field :name, class: 'form-control', id: 'app_name' %>
         </div>
         <div class = 'form-group'>
@@ -14,10 +14,10 @@
         </div>
         <div class = 'form-group'>
           <%= f.label :point %>　<span class="input-unneed">※任意</span>
-          <%= f.text_field :point, size: "30x4", class: 'form-control', id: 'app_point' %>
+          <%= f.text_field :point, class: 'form-control', id: 'app_point' %>
         </div>
         <div class = 'form-group'>
-          <%= f.label :reference %>　<span class="input-need"><b>※必須</b></span>
+          <%= f.label :reference %>　<span class="input-unneed">※任意</span>
           <%= f.text_field :reference, class: 'form-control', id: 'app_reference' %>
         </div>
         <div class = 'form-group'>
@@ -26,7 +26,7 @@
         </div>
         <%= f.submit "更新する", class: "btn btn-primary" %>
         <p></p>
-        <%= link_to "料理を削除する", dish_path(@dish), method: :delete,
+        <%= link_to "アプリを削除する", app_path(@app), method: :delete,
                              data: { confirm: "本当にこのアプリを削除してよろしいですか？" } %>
       <% end %>
     </div>
