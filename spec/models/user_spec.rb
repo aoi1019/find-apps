@@ -67,9 +67,9 @@ RSpec.describe User, type: :model do
   context 'フォロー機能' do
     it 'フォロー・アンフォローができることを確認' do
       expect(user.following?(other_user)).to be_falsey
-      user.following(other_user)
+      user.follow(other_user)
       expect(user.following?(other_user)).to be_truthy
-      user.unfollowing(other_user)
+      user.unfollow(other_user)
       expect(user.following?(other_user)).to be_falsey
     end
   end
