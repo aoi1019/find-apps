@@ -3,118 +3,143 @@ require 'rails_helper'
 RSpec.describe "Apps", type: :system do
   before do
     @user = FactoryBot.create(:user)
-    @app = FactoryBot.create(:app)
+    @app = FactoryBot.create(:app, user: @user)
   end
 
-  describe "アプリ登録ページ" do
+  describe 'アプリ登録ページ' do
     before do
       login_for_system(@user)
       visit new_app_path
     end
 
-    context "ページレイアウト" do
-      it "「アプリ登録」の文字列が存在すること" do
-        expect(page).to have_content 'アプリ登録'
+    context 'ページレイアウト' do
+      it 'アプリ登録の文字列があることを確認' do
+        expect(page).to have_content('アプリ登録')
       end
 
-      it "正しいタイトルが表示されること" do
-        expect(page).to have_title full_title('アプリ登録')
+      it 'タイトルが正しく表示されているか確認' do
+        expect(page).to have_title('アプリ登録')
       end
 
-      it "入力部分に適切なラベルが表示されること" do
-        expect(page).to have_content 'アプリ名'
-        expect(page).to have_content '説明'
-        expect(page).to have_content '技術的ポイント'
-        expect(page).to have_content 'アプリURL'
-        expect(page).to have_content '開発日数 [日]'
+      it '入力部分のラベルが正しく表示されているか確認' do
+        expect(page).to have_content('アプリ名')
+        expect(page).to have_content('説明')
+        expect(page).to have_content('技術的ポイント')
+        expect(page).to have_content('アプリURL')
+        expect(page).to have_content('開発日数')
       end
     end
 
-    context "アプリ登録処理" do
-      it "有効な情報でアプリ登録を行うとアプリ登録成功のフラッシュが表示されること" do
-        fill_in "アプリ名", with: "アプリ"
-        fill_in "説明", with: "オリジナルアプリです"
-        fill_in "技術的ポイント", with: "Ruby on Railsで開発"
-        fill_in "アプリURL", with: "https://find-apps.herokuapp.com/"
-        fill_in "開発日数", with: 30
-        click_button "登録する"
+    context 'アプリの新規登録' do
+      it '正しい情報を入力すればアプリ投稿ができてアプリ詳細ページに移動する' do
+        fill_in 'app_name', with: @app.name
+        fill_in 'app_description', with: @app.description
+        fill_in 'app_point', with: @app.point
+        fill_in 'app_reference', with: @app.reference
+        fill_in 'app_period', with: @app.period
+        expect {
+          find('input[name="commit"]').click
+        }.to change(App, :count).by(1)
         expect(page).to have_content "アプリが登録されました！"
+        expect(page).to have_content(@app.name)
       end
+    end
 
-      it "無効な情報でアプリ登録を行うとアプリ登録失敗のフラッシュが表示されること" do
-        fill_in "アプリ名", with: ""
-        fill_in "説明", with: "オリジナルアプリです"
-        fill_in "技術的ポイント", with: "Ruby on Railsで開発"
-        fill_in "アプリURL", with: "https://find-apps.herokuapp.com/"
-        fill_in "開発日数", with: 30
-        click_button "登録する"
-        expect(page).to have_content "アプリ名を入力してください"
+    context 'アプリの新規登録ができないとき' do
+      it 'ログインしていないと新規投稿ページに移動できない' do
+        visit root_path
+        expect(page).not_to have_content('アプリ登録')
+      end
+      it '無効な情報を入力するとアプリ登録ができない' do
+        expect(page).to have_content('アプリ登録')
+        fill_in 'app_name', with: ""
+        fill_in 'app_description', with: @app.description
+        fill_in 'app_point', with: @app.point
+        fill_in 'app_reference', with: @app.reference
+        fill_in 'app_period', with: @app.period
+        expect {
+          find('input[name="commit"]').click
+        }.to change(App, :count).by(0)
+        expect(page).to have_content('アプリ名を入力してください')
       end
     end
   end
-  describe "アプリ詳細ページ" do
-    context "ページレイアウト" do
+
+  describe 'アプリ詳細ページ' do
+    context 'ページレイアウト' do
       before do
         login_for_system(@user)
         visit app_path(@app)
       end
 
-      it "正しいタイトルが表示されること" do
-        expect(page).to have_title full_title("#{@app.name}")
+      it '正しいタイトルが表示されることを確認' do
+        expect(page).to have_title(@app.name)
       end
 
-      it "アプリ情報が表示されること" do
-        expect(page).to have_content @app.name
-        expect(page).to have_content @app.description
-        expect(page).to have_content @app.point
-        expect(page).to have_content @app.reference
-        expect(page).to have_content @app.period
+      it 'アプリ情報が表示されることを確認' do
+        expect(page).to have_content(@app.name)
+        expect(page).to have_content(@app.description)
+        expect(page).to have_content(@app.point)
+        expect(page).to have_content(@app.period)
+        expect(page).to have_content(@app.reference)
+      end
+    end
+
+    context 'アプリの削除', js: true do
+      before do
+        login_for_system(@user)
+        visit app_path(@app)
+      end
+
+      it '削除成功のフラッシュが出ること' do
+        click_on '削除'
+        page.driver.browser.switch_to.alert.accept
+        expect(page).to have_content 'アプリが削除されました'
       end
     end
   end
-  
-  describe "アプリ編集ページ" do
+
+  describe 'アプリ編集ページ' do
     before do
       login_for_system(@user)
-      visit edit_app_path(@app)
-      # click_link "編集"
+      visit app_path(@app)
     end
 
-    context "ページレイアウト" do
-      it "正しいタイトルが表示されること" do
-        expect(page).to have_title full_title('アプリ情報の編集')
-      end
-
-      it "入力部分に適切なラベルが表示されること" do
-        expect(page).to have_content 'アプリ名'
-        expect(page).to have_content '説明'
-        expect(page).to have_content '技術的ポイント'
-        expect(page).to have_content 'アプリURL'
-        expect(page).to have_content '開発日数'
+    context 'ページレイアウト' do
+      it 'アプリ情報が表示されることを確認' do
+        expect(page).to have_content(@app.name)
+        expect(page).to have_content(@app.description)
+        expect(page).to have_content(@app.point)
+        expect(page).to have_content(@app.period)
+        expect(page).to have_content(@app.reference)
       end
     end
 
-    context "アプリの更新処理" do
-      it "有効な更新" do
-        fill_in "アプリ名", with: "編集：アプリ"
-        fill_in "説明", with: "編集：オリジナルアプリです"
-        fill_in "技術的ポイント", with: "編集：Ruby on Railsで開発"
-        fill_in "アプリURL", with: "henshu-https://find-apps.herokuapp.com/"
-        fill_in "開発日数", with: 60
-        click_button "更新する"
-        expect(page).to have_content "アプリ情報が更新されました！"
-        expect(@app.reload.name).to eq "編集：アプリ"
-        expect(@app.reload.description).to eq "編集：オリジナルアプリです"
-        expect(@app.reload.point).to eq "編集：Ruby on Railsで開発"
-        expect(@app.reload.reference).to eq "henshu-https://find-apps.herokuapp.com/"
-        expect(@app.reload.period).to eq 60
+    context '編集ができるか確認' do
+      it '有効な更新' do
+        click_link "編集"
+        fill_in 'app_name', with: @app.name
+        fill_in 'app_description', with: @app.description
+        fill_in 'app_point', with: @app.point
+        fill_in 'app_reference', with: @app.reference
+        fill_in 'app_period', with: @app.period
+        click_button '更新する'
+        expect(current_path).to eq app_path(@app)
       end
 
-      it "無効な更新" do
-        fill_in "アプリ名", with: ""
-        click_button "更新する"
-        expect(page).to have_content 'アプリ名を入力してください'
-        expect(@app.reload.name).not_to eq ""
+      it '無効な更新' do
+        click_link "編集"
+        fill_in 'app_name', with: ''
+        click_button '更新する'
+        expect(page).to have_content('アプリ名を入力してください')
+      end
+    end
+
+    context 'アプリの削除処理', js: true do
+      it '削除成功のフラッシュが表示されることを確認' do
+        click_on '削除'
+        page.driver.browser.switch_to.alert.accept
+        expect(page).to have_content 'アプリが削除されました'
       end
     end
   end
