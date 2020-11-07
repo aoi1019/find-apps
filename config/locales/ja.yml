@@ -27,6 +27,7 @@ ja:
         reference: アプリURL
         period: 開発日数
         user_id: 作成者のID
+        picture: アプリの画像
   date:
     abbr_day_names:
     - 日
