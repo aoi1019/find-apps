@@ -49,7 +49,7 @@ class AppsController < ApplicationController
   private
 
     def app_params
-      params.require(:app).permit(:name, :description, :point, :period, :reference)
+      params.require(:app).permit(:name, :description, :point, :period, :reference, :picture)
     end
 
     def correct_user
