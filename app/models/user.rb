@@ -1,5 +1,8 @@
 class User < ApplicationRecord
   has_many :apps, dependent: :destroy
+  has_many :active_relationships, class_name: "Relationships",
+                                  foreign_key: "follower_id",
+                                  dependent: :destroy
   attr_accessor :remember_token
   before_save { self.email = email.downcase }
   validates :name, presence: true, length: { maximum: 50 }
