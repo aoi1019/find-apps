@@ -17,13 +17,14 @@ RSpec.describe "アプリ登録", type: :request do
         expect(response).to redirect_to new_app_url
       end
     end
+
     it "有効なアプリデータで登録できること" do
       expect {
         post apps_path, params: { app: {  name: "アプリ",
                                           description: "オリジナルアプリです",
                                           point: "Ruby on Railsで開発",
                                           reference: "https://find-apps.herokuapp.com/",
-                                          period: 30} }
+                                          period: 30 } }
       }.to change(App, :count).by(1)
       follow_redirect!
       expect(response).to render_template('apps/show')
@@ -34,7 +35,7 @@ RSpec.describe "アプリ登録", type: :request do
                                           description: "オリジナルアプリです",
                                           point: "Ruby on Railsで開発",
                                           reference: "https://find-apps.herokuapp.com/",
-                                          period: 30} }
+                                          period: 30 } }
       }.not_to change(App, :count)
       expect(response).to render_template('apps/new')
     end

@@ -46,8 +46,8 @@ class AppsController < ApplicationController
     end
   end
 
-
   private
+
     def app_params
       params.require(:app).permit(:name, :description, :point, :period, :reference)
     end
