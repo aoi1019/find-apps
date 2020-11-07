@@ -1,5 +1,5 @@
 User.create!(name:  "山田 太郎",
-  email: "sample@example.com",
+  email: "sample@example2.com",
   password:              "foobar",
   password_confirmation: "foobar",
   admin: true)
@@ -17,7 +17,7 @@ end
 10.times do |n|
   App.create!(name: "インスタグラム",
                description: "オリジナルアプリです",
-               point: "ピリッと辛めに味付けするのがオススメ",
+               point: "Ruby on Railsで開発",
                reference: "https://find-apps.herokuapp.com/",
                period: 30,
                user_id: 1)
