@@ -1,25 +1,32 @@
 <% provide(:title, "#{@app.name}") %>
 <div class="container">
   <div class="row">
-    <h2 class="app-name"><%= @app.name %></h2>
-    <div class="change-app">
-      <% if current_user == @app.user %>
-        <%= link_to "編集", edit_app_path(@app), class: 'edit-app' %>　
-      <% end %>
-      <% if current_user.admin? || (current_user == @app.user) %>
-        <%= link_to "削除", app_path(@app), method: :delete, class: 'delete-app',
-                                      data: { confirm: "本当に削除しますか？" } %>
-      <% end %>
+    <div class="col-md-4">
+      <span class="picture">
+        <%= link_to((image_tag @app.picture.thumb400.url), app_path(@app.id), class: 'app-picture') if @app.picture.url.present? %>
+      </span>
     </div>
-    <h4><%= @app.description %></h4>
-    <h4 class="app-reference">アプリURL：<%= link_to "#{@app.reference}", @app.reference, target: "_blank" %></h4>
-    <div class="point">
-      <h5 class="title-point">技術的ポイント</h5>
-      <h5><%= @app.point %></h5>
-    </div>
-    <div class="show-app-other-info">
-      <div class="app-info">
-        <h5>開発日数：</h5><h4><%= @app.period %></h4> <h5>日</h5>
+    <div class="col-md-8">
+      <h2 class="app-name"><%= @app.name %></h2>
+      <div class="change-app">
+        <% if current_user == @app.user %>
+          <%= link_to "編集", edit_app_path(@app), class: 'edit-app' %>　
+        <% end %>
+        <% if current_user.admin? || (current_user == @app.user) %>
+          <%= link_to "削除", app_path(@app), method: :delete, class: 'delete-app',
+                                        data: { confirm: "本当に削除しますか？" } %>
+        <% end %>
+      </div>
+      <h4><%= @app.description %></h4>
+      <h4 class="app-reference">アプリURL：<%= link_to "#{@app.reference}", @app.reference, target: "_blank" %></h4>
+      <div class="point">
+        <h5 class="title-point">技術的ポイント</h5>
+        <h5><%= @app.point %></h5>
+      </div>
+      <div class="show-app-other-info">
+        <div class="app-info">
+          <h5>開発日数：</h5><h4><%= @app.period %></h4> <h5>日</h5>
+        </div>
       </div>
     </div>
   </div>

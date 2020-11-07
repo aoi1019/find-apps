@@ -7,4 +7,7 @@ FactoryBot.define do
     period { 10 }
     association :user
   end
+  trait :picture do
+    picture { Rack::Test::UploadedFile.new(File.join(Rails.root, 'spec/fixtures/mac.jpg')) }
+  end
 end

@@ -268,3 +268,9 @@ h2.app-name {
 .edit-app .delete-app {
   font-size: 15px;
 }
+
+.app-picture img {
+  max-width: 100%;
+  height: auto;
+  box-sizing: border-box;
+}
