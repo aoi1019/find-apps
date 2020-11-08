@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   post   :login,     to: 'sessions#create'
   delete :logout,    to: 'sessions#destroy'
   resources :relationships, only: [:create, :destroy]
+  get :favorites, to: "favorites#index"
   post   "favorites/:app_id/create"  => "favorites#create"
   delete "favorites/:app_id/destroy" => "favorites#destroy"
 end

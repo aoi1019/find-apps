@@ -1,0 +1,14 @@
+<% @app = App.find(favorite.app_id) %>
+<% user = @app.user %>
+<li id="favorite-<%= favorite.id %>">
+  <div class="row favorite-app">
+    <div class="col-md-2">
+      <%= link_to((image_tag @app.picture.url), app_path(@app), class: 'app-picture') %>
+    </div>
+    <div class="col-md-7">
+      <p><%= link_to @app.name, app_path(@app) %></p>
+      <p><%= @app.description %></p>
+      <p class="cook-user">cooked by <%= link_to user.name, user_path(user) %></p>
+    </div>
+  </div>
+</li>
