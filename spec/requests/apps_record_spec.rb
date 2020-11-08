@@ -3,6 +3,7 @@ require "rails_helper"
 RSpec.describe "アプリ登録", type: :request do
   let(:picture_path) { File.join(Rails.root, 'spec/fixtures/mac.jpg') }
   let(:picture) { Rack::Test::UploadedFile.new(picture_path) }
+
   before do
     @user = FactoryBot.create(:user)
     @app = FactoryBot.create(:app)

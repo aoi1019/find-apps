@@ -158,6 +158,7 @@ RSpec.describe "Users", type: :system do
         expect(page).to have_css "div.pagination"
       end
     end
+
     context 'ユーザーのフォロー/アンフォロー' do
       it 'ユーザーのフォロー/アンフォローができることを確認' do
         login_for_system(user)
@@ -169,13 +170,14 @@ RSpec.describe "Users", type: :system do
         expect(page).to have_button 'フォローする'
       end
     end
+
     context 'お気に入り登録/解除' do
       before do
         @user = FactoryBot.create(:user)
         @app = FactoryBot.create(:app, user: @user)
         login_for_system(@user)
       end
-    
+
       it 'アプリのお気に入り登録・解除ができることを確認' do
         expect(user.favorite?(@app)).to be_falsey
         @user.favorite(@app)
@@ -183,7 +185,7 @@ RSpec.describe "Users", type: :system do
         @user.unfavorite(@app)
         expect(@user.favorite?(@app)).to be_falsey
       end
-      
+
       it 'トップページからお気に入り登録/解除ができることを確認', js: true do
         visit root_path
         link = find(".like")
