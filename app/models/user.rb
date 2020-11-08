@@ -8,6 +8,7 @@ class User < ApplicationRecord
                                    foreign_key: 'followed_id',
                                    dependent: :destroy
   has_many :followers, through: :passive_relationships, source: :follower
+  has_many :favorites, dependent: :destroy
   attr_accessor :remember_token
   before_save { self.email = email.downcase }
   validates :name, presence: true, length: { maximum: 50 }
@@ -64,5 +65,17 @@ class User < ApplicationRecord
 
   def followed_by?(other_user)
     followers.include?(other_user)
+  end
+
+  def favorite(app)
+    Favorite.create!(user_id: id, app_id: app.id)
+  end
+
+  def unfavorite(app)
+    Favorite.find_by(user_id: id, app_id: app.id).destroy
+  end
+
+  def favorite?(app)
+    !Favorite.find_by(user_id: id, app_id: app.id).nil?
   end
 end

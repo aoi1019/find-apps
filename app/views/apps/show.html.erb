@@ -5,6 +5,7 @@
       <span class="picture">
         <%= link_to((image_tag @app.picture.thumb400.url), app_path(@app.id), class: 'app-picture') if @app.picture.url.present? %>
       </span>
+      <%= render 'users/favorite_form' %>
     </div>
     <div class="col-md-8">
       <h2 class="app-name"><%= @app.name %></h2>
