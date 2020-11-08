@@ -66,4 +66,16 @@ class User < ApplicationRecord
   def followed_by?(other_user)
     followers.include?(other_user)
   end
+
+  def favorite(app)
+    Favorite.create!(user_id: id, app_id: app.id)
+  end
+
+  def unfavorite(app)
+    Favorite.find_by(user_id: id, app_id: app.id).destroy
+  end
+
+  def favorite?(app)
+    !Favorite.find_by(user_id: id, app_id: app.id).nil?
+  end
 end
