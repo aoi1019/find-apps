@@ -9,6 +9,7 @@ ja:
     models:
       user: ユーザー
       app: アプリ
+      comment: コメント
     attributes:
       user:
         id: ID
@@ -28,6 +29,10 @@ ja:
         period: 開発日数
         user_id: 作成者のID
         picture: アプリの画像
+      comment:
+        user_id: コメント投稿者のID
+        app_id:  コメントされたアプリのID
+        content: コメント
   date:
     abbr_day_names:
     - 日
