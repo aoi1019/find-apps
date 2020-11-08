@@ -17,4 +17,5 @@ Rails.application.routes.draw do
   get :favorites, to: "favorites#index"
   post   "favorites/:app_id/create"  => "favorites#create"
   delete "favorites/:app_id/destroy" => "favorites#destroy"
+  resources :comments, onlu: [:create, :destroy]
 end
