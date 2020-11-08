@@ -169,5 +169,20 @@ RSpec.describe "Users", type: :system do
         expect(page).to have_button 'フォローする'
       end
     end
+    context 'お気に入り登録/解除' do
+      before do
+        @user = FactoryBot.create(:user)
+        @app = FactoryBot.create(:app, user: @user)
+        login_for_system(user)
+      end
+    
+      it 'アプリのお気に入り登録・解除ができることを確認' do
+        expect(user.favorite?(@app)).to be_falsey
+        @user.favorite(@app)
+        expect(@user.favorite?(@app)).to be_truthy
+        @user.unfavorite(@app)
+        expect(@user.favorite?(@app)).to be_falsey
+      end
+    end
   end
 end
