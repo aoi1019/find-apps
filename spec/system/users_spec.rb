@@ -173,7 +173,7 @@ RSpec.describe "Users", type: :system do
       before do
         @user = FactoryBot.create(:user)
         @app = FactoryBot.create(:app, user: @user)
-        login_for_system(user)
+        login_for_system(@user)
       end
     
       it 'アプリのお気に入り登録・解除ができることを確認' do
@@ -218,6 +218,29 @@ RSpec.describe "Users", type: :system do
         link.click
         link = find('.like')
         expect(link[:href]).to include "/favorites/#{@app.id}/create"
+      end
+
+      it "お気に入り一覧ページが期待通り表示されること" do
+        @other_user = FactoryBot.create(:user)
+        @other_app = FactoryBot.create(:app, user: @other_user)
+        visit favorites_path
+        expect(page).not_to have_css ".favorite-app"
+        @user.favorite(@app)
+        @user.favorite(@other_app)
+        visit favorites_path
+        expect(page).to have_css ".favorite-app", count: 2
+        expect(page).to have_content @app.name
+        expect(page).to have_content @app.description
+        expect(page).to have_content "developed by #{@user.name}"
+        expect(page).to have_link @user.name, href: user_path(@user)
+        expect(page).to have_content @other_app.name
+        expect(page).to have_content @other_app.description
+        expect(page).to have_content "developed by #{@other_user.name}"
+        expect(page).to have_link @other_user.name, href: user_path(@other_user)
+        @user.unfavorite(@other_app)
+        visit favorites_path
+        expect(page).to have_css ".favorite-app", count: 1
+        expect(page).to have_content @app.name
       end
     end
   end

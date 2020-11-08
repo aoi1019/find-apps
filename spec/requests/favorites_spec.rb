@@ -6,6 +6,24 @@ RSpec.describe "お気に入り登録機能", type: :request do
     @app  = FactoryBot.create(:app)
   end
 
+  context 'お気に入り一覧ページの表示' do
+    context 'ログインしている場合' do
+      it 'レスポンスが正常に表示されること' do
+        login_for_request(@user)
+        get favorites_path
+        expect(response.status).to eq 200
+        expect(response).to render_template("favorites/index")
+      end
+    end
+    context 'ログインしていない場合' do
+      it 'ログイン画面にリダイレクトすることを確認' do
+        get favorites_path
+        expect(response.status).not_to eq 200
+        expect(response).to redirect_to login_path
+      end
+    end
+  end
+
   context 'お気に入り登録' do
     context 'ログインしている場合' do
       before do
