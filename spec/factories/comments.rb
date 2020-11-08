@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :comment do
-    app_id 1
-    user_id 1
-    content "MyText"
+    association :user
+    content { "面白いアプリですね！" }
+    association :app
   end
 end
