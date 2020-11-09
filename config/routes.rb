@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  # get 'sessions/new'
   root 'static_pages#home'
   get :signup,       to: 'users#new'
   get :about,        to: 'static_pages#about'
@@ -17,5 +16,6 @@ Rails.application.routes.draw do
   get :favorites, to: "favorites#index"
   post   "favorites/:app_id/create"  => "favorites#create"
   delete "favorites/:app_id/destroy" => "favorites#destroy"
-  resources :comments, onlu: [:create, :destroy]
+  resources :comments, only: [:create, :destroy]
+  resources :notifications, only: :index
 end
