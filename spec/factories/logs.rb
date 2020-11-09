@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :log do
-    app_id 1
-    content "MyText"
+    content "チャット機能を追加"
+    association :app
   end
 end
