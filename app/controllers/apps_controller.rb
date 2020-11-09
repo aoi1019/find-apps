@@ -19,6 +19,7 @@ class AppsController < ApplicationController
   def show
     @app = App.find(params[:id])
     @comment = Comment.new
+    @log = Log.new
   end
 
   def edit
