@@ -4,6 +4,7 @@ RSpec.describe "Notifications", type: :request do
   before do
     @user = FactoryBot.create(:user)
   end
+
   context '通知一覧ページの表示' do
     context 'ログインしている場合' do
       before do
@@ -15,6 +16,7 @@ RSpec.describe "Notifications", type: :request do
         expect(response.status).to eq 200
       end
     end
+
     context 'ログインしていない場合' do
       it 'レスポンスが表示されないことを確認' do
         get notifications_path
@@ -31,6 +33,7 @@ RSpec.describe "Notifications", type: :request do
       @other_user = FactoryBot.create(:user)
       @other_app = FactoryBot.create(:app, user: @other_user)
     end
+
     context "自分以外のユーザーのアプリに対して" do
       it "お気に入り登録によって通知が作成されること" do
         post "/favorites/#{@other_app.id}/create"
@@ -59,5 +62,4 @@ RSpec.describe "Notifications", type: :request do
       end
     end
   end
-
 end

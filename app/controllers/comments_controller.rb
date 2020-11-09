@@ -17,7 +17,6 @@ class CommentsController < ApplicationController
       flash[:danger] = "空のコメントは投稿できません。"
     end
     redirect_to request.referrer || root_url
-
   end
 
   def destroy
@@ -29,5 +28,4 @@ class CommentsController < ApplicationController
     end
     redirect_to app_path(@app)
   end
-
 end

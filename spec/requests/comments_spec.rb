@@ -15,26 +15,26 @@ RSpec.describe "Comments", type: :request do
       end
 
       it '有効なコメントが登録できることを確認' do
-        expect{
-          post comments_path, params: { app_id: @app.id, 
+        expect {
+          post comments_path, params: { app_id: @app.id,
                                         comment: { content: "面白いアプリですね" } }
-          }.to change(@app.comments, :count).by(1)
+        }.to change(@app.comments, :count).by(1)
       end
 
       it '無効なコメントが登録できないことを確認' do
-        expect{
-          post comments_path, params: { app_id: @app.id, 
+        expect {
+          post comments_path, params: { app_id: @app.id,
                                         comment: { content: "" } }
-          }.not_to change(@app.comments, :count)
+        }.not_to change(@app.comments, :count)
       end
     end
 
     context 'ログインしていない場合' do
       it 'コメントは登録できず、ログインページにリダイレクトすることを確認' do
-        expect{
-          post comments_path, params: { app_id: @app.id, 
-                                        comment: { content: "いいアプリですね！"} }
-          }.not_to change(@app.comments, :count)
+        expect {
+          post comments_path, params: { app_id: @app.id,
+                                        comment: { content: "いいアプリですね！" } }
+        }.not_to change(@app.comments, :count)
           expect(response).to redirect_to login_path
       end
     end
@@ -45,7 +45,7 @@ RSpec.describe "Comments", type: :request do
       context 'コメントを投稿したユーザーである場合' do
         it 'コメントの削除ができることを確認' do
           login_for_request(@user)
-          expect{
+          expect {
             delete comment_path(@comment)
           }.to change(@app.comments, :count).by(-1)
         end
@@ -54,7 +54,7 @@ RSpec.describe "Comments", type: :request do
       context 'コメントを投稿したユーザーでない場合' do
         it 'コメントの削除ができないことを確認' do
           login_for_request(@other_user)
-          expect{
+          expect {
             delete comment_path(@comment)
           }.not_to change(@app.comments, :count)
         end
@@ -63,9 +63,8 @@ RSpec.describe "Comments", type: :request do
 
     context 'ログインしていない場合' do
       it 'コメントの削除はできず、ログインページにリダイレクトすることを確認' do
-        expect{
+        expect {
           delete comment_path(@comment)
-
         }.not_to change(@app.comments, :count)
       end
     end

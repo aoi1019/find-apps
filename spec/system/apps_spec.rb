@@ -147,10 +147,12 @@ RSpec.describe "Apps", type: :system do
       end
     end
   end
+
   context 'コメントの登録・解除' do
     before do
       @comment = FactoryBot.create(:comment, user: @user)
     end
+
     it '自分のアプリに対するコメントの登録＆削除が正常に完了すること' do
       login_for_system(@user)
         visit app_path(@app)

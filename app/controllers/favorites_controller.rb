@@ -13,7 +13,7 @@ class FavoritesController < ApplicationController
       format.html { redirect_to request.referrer || root_path }
       format.js
     end
-    
+
     if @user != current_user
       @user.notifications.create(app_id: @app.id, variety: 1,
                                  from_user_id: current_user.id)
