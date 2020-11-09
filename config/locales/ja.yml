@@ -10,6 +10,7 @@ ja:
       user: ユーザー
       app: アプリ
       comment: コメント
+      log: 開発ログ
     attributes:
       user:
         id: ID
@@ -33,6 +34,9 @@ ja:
         user_id: コメント投稿者のID
         app_id:  コメントされたアプリのID
         content: コメント
+      log:
+        app_id: 開発ログをつけるアプリのID
+        content: メモ
   date:
     abbr_day_names:
     - 日
