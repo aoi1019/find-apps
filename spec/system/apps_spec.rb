@@ -147,4 +147,23 @@ RSpec.describe "Apps", type: :system do
       end
     end
   end
+  context 'コメントの登録・解除' do
+    before do
+      @comment = FactoryBot.create(:comment, user: @user)
+    end
+    it '自分のアプリに対するコメントの登録＆削除が正常に完了すること' do
+      login_for_system(@user)
+        visit app_path(@app)
+      fill_in "comment_content", with: "素晴らしいアプリですね"
+      click_button 'コメント'
+      within find("#comment-#{Comment.last.id}") do
+        expect(page).to have_selector 'span', text: @user.name
+        expect(page).to have_selector 'span', text: '素晴らしいアプリですね'
+      end
+      expect(page).to have_content "コメントを追加しました！"
+      click_link "削除", href: comment_path(Comment.last)
+      expect(page).not_to have_selector 'span', text: '素晴らしいアプリですね'
+      expect(page).to have_content "コメントを削除しました"
+    end
+  end
 end
