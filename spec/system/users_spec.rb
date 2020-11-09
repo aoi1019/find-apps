@@ -245,5 +245,80 @@ RSpec.describe "Users", type: :system do
         expect(page).to have_content @app.name
       end
     end
+
+    context '通知生成' do
+      before do
+        login_for_system(user)
+        @app = FactoryBot.create(:app, user: user)
+        @other_user = FactoryBot.create(:user)
+        @other_app = FactoryBot.create(:app, user: @other_user)
+      end
+
+      context "自分以外のユーザーのアプリに対して" do
+        before do
+          visit app_path(@other_app)
+        end
+
+        it 'お気に入り登録によって通知が生成されることを確認' do
+          find('.like').click
+          visit app_path(@other_app)
+          expect(page).to have_css 'li.no_notification'
+          logout
+          login_for_system(@other_user)
+          expect(page).to have_css 'li.new_notification'
+          visit notifications_path
+          expect(page).to have_css 'li.no_notification'
+          expect(page).to have_content "あなたのアプリが#{user.name}さんにお気に入り登録されました。"
+          expect(page).to have_content @other_app.name
+          expect(page).to have_content @other_app.description
+          expect(page).to have_content @other_app.created_at.strftime("%Y/%m/%d(%a) %H:%M")
+        end
+
+        it "コメントによって通知が作成されること" do
+          fill_in "comment_content", with: "コメントしました"
+          click_button "コメント"
+          expect(page).to have_css 'li.no_notification'
+          logout
+          login_for_system(@other_user)
+          expect(page).to have_css 'li.new_notification'
+          visit notifications_path
+          expect(page).to have_css 'li.no_notification'
+          expect(page).to have_content "あなたのアプリに#{user.name}さんがコメントしました。"
+          expect(page).to have_content '「コメントしました」'
+          expect(page).to have_content @other_app.name
+          expect(page).to have_content @other_app.description
+          expect(page).to have_content @other_app.created_at.strftime("%Y/%m/%d(%a) %H:%M")
+        end
+      end
+
+      context "自分のアプリに対して" do
+        before do
+          visit app_path(@app)
+        end
+
+        it "お気に入り登録によって通知が作成されないこと" do
+          find('.like').click
+          visit app_path(@app)
+          expect(page).to have_css 'li.no_notification'
+          visit notifications_path
+          expect(page).not_to have_content 'お気に入りに登録されました。'
+          expect(page).not_to have_content @app.name
+          expect(page).not_to have_content @app.description
+          expect(page).not_to have_content @app.created_at
+        end
+
+        it "コメントによって通知が作成されないこと" do
+          fill_in "comment_content", with: "自分でコメント"
+          click_button "コメント"
+          expect(page).to have_css 'li.no_notification'
+          visit notifications_path
+          expect(page).not_to have_content 'コメントしました。'
+          expect(page).not_to have_content '自分でコメント'
+          expect(page).not_to have_content @other_app.name
+          expect(page).not_to have_content @other_app.description
+          expect(page).not_to have_content @other_app.created_at
+        end
+      end
+    end
   end
 end
