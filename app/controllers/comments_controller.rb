@@ -11,6 +11,11 @@ class CommentsController < ApplicationController
       flash[:danger] = "空のコメントは投稿できません。"
     end
     redirect_to request.referrer || root_url
+
+    if @user != current_user
+      @user.notifications.create(app_id: @app.id, variety: 2, from_user_id: current_user.id, content: @comment.content)
+      @user.update.attribute(:notification, true)
+    end
   end
 
   def destroy

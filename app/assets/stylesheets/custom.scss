@@ -318,3 +318,7 @@ a.like, a.unlike {
 .comment-create-at {
   color: grey;
 }
+
+li.new_notification > a > span {
+  color: red;
+}
