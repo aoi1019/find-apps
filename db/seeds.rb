@@ -21,6 +21,8 @@ end
                reference: "https://find-apps.herokuapp.com/",
                period: 30,
                user_id: 1)
+  app = App.first
+  Log.create!(app_id: app.id, content: app.memo)
 end
 
 users = User.all
