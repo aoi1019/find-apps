@@ -4,7 +4,7 @@
       <span class="development_times"><%= @logs.count %>回目</span>
     </div>
     <div class="col-md-3">
-      <span class="created_at"><%= log.created_at.strftime("%Y/%m/%d(%a)") %></span>
+      <span class="created_at"><%= l log.created_at %></span>
     </div>
     <div class="col-md-5">
       <span class="content"><%= log.content %></span>
