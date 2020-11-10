@@ -10,6 +10,7 @@ class AppsController < ApplicationController
     @app = current_user.apps.build(app_params)
     if @app.save
       flash[:success] = "アプリが登録されました！"
+      Log.create(app_id: @app.id, content: @app.memo)
       redirect_to app_path(@app)
     else
       render :new

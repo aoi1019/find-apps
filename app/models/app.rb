@@ -14,6 +14,10 @@ class App < ApplicationRecord
     Comment.where("app_id = ?", app_id)
   end
 
+  def feed_log(app_id)
+    Log.where("app_id = ?", app_id)
+  end
+
   private
 
     def picture_size

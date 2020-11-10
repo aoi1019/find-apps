@@ -18,6 +18,7 @@ ActiveRecord::Schema.define(version: 2020_11_09_153916) do
     t.text "point"
     t.text "reference"
     t.integer "period"
+    t.text "memo"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
