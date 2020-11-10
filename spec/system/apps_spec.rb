@@ -99,6 +99,68 @@ RSpec.describe "Apps", type: :system do
         expect(page).to have_content 'アプリが削除されました'
       end
     end
+
+    context 'ログ登録&解除' do
+      before do
+        @other_user = FactoryBot.create(:user)
+      end
+      context 'アプリ詳細ページから' do
+        it '自分のアプリに対するログ登録&解除が正常に完了することを確認' do
+          login_for_system(@user)
+          visit app_path(@app)
+          fill_in "log_content", with: "ログ投稿テスト"
+          click_button "追加"
+          within find("#log-#{Log.first.id}") do
+            expect(page).to have_selector 'span', text: "#{@app.logs.count}回目"
+            expect(page).to have_selector 'span',
+                                          text: %Q(#{Log.last.created_at.strftime("%Y/%m/%d(%a)")})
+            expect(page).to have_selector 'span', text: 'ログ投稿テスト'
+          end
+          expect(page).to have_content "開発ログを追加しました！"
+          click_link "削除", href: log_path(Log.first)
+          expect(page).not_to have_selector 'span', text: 'ログ投稿テスト'
+          expect(page).to have_content "開発ログを削除しました"
+        end
+
+        it '別ユーザーのアプリログにはログ登録フォームがないことを確認' do
+          login_for_system(@other_user)
+          visit app_path(@app)
+          expect(page).not_to have_button "追加"
+        end
+      end
+
+      context 'トップページから' do
+        it '自分のアプリに対するログ登録が正常に完了することを確認' do
+          login_for_system(@user)
+          visit root_path
+          fill_in "log_content", with: "ログ投稿テスト"
+          click_button "追加"
+          expect(Log.first.content).to eq "ログ投稿テスト"
+          expect(page).to have_content '開発ログを追加しました！'
+        end
+
+        it '別ユーザーのアプリには登録フォームがないことを確認' do
+          create(:app, user: @other_user)
+          login_for_system(@user)
+          @user.follow(@other_user)
+          visit root_path
+          within find("#app-#{App.first.id}") do
+            expect(page).to have_button "追加"
+          end
+        end
+      end
+
+      context 'プロフィールページから' do
+        it '自分のアプリに対するログ登録が正常に完了すること' do
+          login_for_system(@user)
+          visit user_path(@user)
+          fill_in "log_content", with: "ログ投稿テスト"
+          click_button "追加"
+          expect(Log.first.content).to eq "ログ投稿テスト"
+          expect(page).to have_content "開発ログを追加しました！"
+        end
+      end
+    end
   end
 
   describe 'アプリ編集ページ' do
