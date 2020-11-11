@@ -359,3 +359,29 @@ li.new_notification > a > span {
     }
   }
 }
+
+.app-user {
+  text-align: right;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+h3.app-name {
+  font-size: 20px;
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+.app-description {
+  margin-top: 10px;
+}
+
+// お気に入り
+.cook-user {
+ margin-bottom: 20px;
+}
+
+// ログ
+.app-times {
+ font-weight: bold;
+}

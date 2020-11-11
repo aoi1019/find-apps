@@ -7,7 +7,7 @@
       </span>
       <%= render 'users/favorite_form' %>
     </div>
-    <div class="col-md-8 escape-float">
+    <div class="col-md-8">
       <h3 class="app-name"><%= link_to app.name, app_path(app) %></h3>
       <div class="app-description"><%= app.description %></div><br>
       <div class="app-user">developed by <%= link_to app.user.name, user_path(app.user) %></div>
