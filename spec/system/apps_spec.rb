@@ -104,6 +104,7 @@ RSpec.describe "Apps", type: :system do
       before do
         @other_user = FactoryBot.create(:user)
       end
+
       context 'アプリ詳細ページから' do
         it '自分のアプリに対するログ登録&解除が正常に完了することを確認' do
           login_for_system(@user)

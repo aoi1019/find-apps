@@ -21,6 +21,7 @@ class LogsController < ApplicationController
   end
 
   private
+
     def correct_user
       app = current_user.apps.find_by(id: params[:app_id])
       redirect_to root_path if app.nil?
