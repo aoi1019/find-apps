@@ -15,7 +15,7 @@
         <div class="app-times">開発ログ：<%= app.logs.count %>更新　</div>
         <span class="period">開発日数：<%= app.period %>日　</span>
         <span class="point">ポイント：<%= app.point %></span><br>
-        <span class="reference"><%= link_to "アプリURL", app.reference, target: :_blank %></span>
+        <span class="reference"><%= link_to "#{app.reference}", app.reference, target: :_blank %></span>
       </div>
       <% if current_user == app.user %>
         <%= render "logs/new_form_mini" %>
