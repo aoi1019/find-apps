@@ -21,16 +21,16 @@ https://find-apps.herokuapp.com/
 
 # 使用した技術（開発環境）
 ## フレームワーク
-- Ruby on Rails 6.0.3.4
-- Bootstrap
+- Ruby on Rails 5.2.4.4
+- Bootstrap4
 - Sass
 
 ## データベース
 - Mysql
 
-# 今後解決したい課題（まだ途中）
+# 今後解決したい課題
 - デザインが地味なので、よりモダンなデザインに仕上げたい。
-- ユーザーが使いやすいように検索機能を 
+- ユーザーが使いやすいように検索機能を実装したい。
 
 
 # テーブル設計
@@ -106,3 +106,20 @@ https://find-apps.herokuapp.com/
 
 - belongs_to :follower
 - belongs_to :followed
+
+## Notificationsテーブル
+
+| Column   | Type   | Options     |
+| -------- | ------ | ----------- |
+| app_id  | integer | null: false |
+| user_id | integer | null: false |
+| variety | integer | null: false |
+| content | text    | null: false |
+| from_user_id | integer    | null: false |
+
+## Logsテーブル
+
+| Column  | Type    | Options     |
+| ------- | ------- | ----------- |
+| app_id  | integer | null: false |
+| content | text    | null: false |
