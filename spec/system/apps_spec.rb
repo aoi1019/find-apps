@@ -39,7 +39,7 @@ RSpec.describe "Apps", type: :system do
         fill_in 'app_period', with: @app.period
         attach_file "app[picture]", "#{Rails.root}/spec/fixtures/mac.jpg"
         expect {
-          find('input[name="commit"]').click
+          find('input.app-submit').click
         }.to change(App, :count).by(1)
         expect(page).to have_content "アプリが登録されました！"
         expect(page).to have_content(@app.name)
@@ -59,7 +59,7 @@ RSpec.describe "Apps", type: :system do
         fill_in 'app_reference', with: @app.reference
         fill_in 'app_period', with: @app.period
         expect {
-          find('input[name="commit"]').click
+          find('input.app-submit').click
         }.to change(App, :count).by(0)
         expect(page).to have_content('アプリ名を入力してください')
       end
@@ -229,6 +229,47 @@ RSpec.describe "Apps", type: :system do
       click_link "削除", href: comment_path(Comment.last)
       expect(page).not_to have_selector 'span', text: '素晴らしいアプリですね'
       expect(page).to have_content "コメントを削除しました"
+    end
+  end
+
+  context '検索機能' do
+    context 'ログインしている場合' do
+      before do
+        login_for_system(@user)
+        visit root_path
+      end
+
+      it 'ログイン後の各ページに検索窓が表示されていることを確認' do
+        expect(page).to have_css 'form#app_search'
+        visit about_path
+        expect(page).to have_css 'form#app_search'
+        visit use_of_terms_path
+        expect(page).to have_css 'form#app_search'
+        visit users_path
+        expect(page).to have_css 'form#app_search'
+        visit user_path(@user)
+        expect(page).to have_css 'form#app_search'
+        visit edit_user_path(@user)
+        expect(page).to have_css 'form#app_search'
+        visit following_user_path(@user)
+        expect(page).to have_css 'form#app_search'
+        visit followers_user_path(@user)
+        expect(page).to have_css 'form#app_search'
+        visit apps_path
+        expect(page).to have_css 'form#app_search'
+        visit app_path(@app)
+        expect(page).to have_css 'form#app_search'
+        visit new_app_path
+        expect(page).to have_css 'form#app_search'
+        visit edit_app_path(@app)
+        expect(page).to have_css 'form#app_search'
+      end
+    end
+    context 'ログインしていない場合' do
+      it '検索フォームが表示されないことを確認' do
+        visit root_path
+        expect(page).not_to have_css 'form#app_search'
+      end
     end
   end
 end
