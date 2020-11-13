@@ -1,5 +1,5 @@
 <% if logged_in? %>
-  <div class="container">
+  <div class="container animate__animated animate__zoomIn">
     <div class="row">
       <div class="col-md-9">
         <h3>アプリ一覧 (<%= @feed_items.count %>)</h3>
@@ -12,8 +12,10 @@
   </div>
 <% else %>
   <center>
+    <%# render "shared/recruit_login" %>
     <h1>FindAppsへようこそ！</h1>
     <h2>みんなのオリジナルアプリ知りたくないですか？</h2>
     <p>今日からアプリを開発しよう！！</p>
+    <%= link_to "さっそく始める", login_path, class: 'btn btn-primary btn-lg' %>
   </center>
 <% end %>
