@@ -8,7 +8,7 @@
     <div class="col-md-7">
       <p><%= link_to @app.name, app_path(@app) %></p>
       <p><%= @app.description %></p>
-      <p class="cook-user">developed by <%= link_to user.name, user_path(user) %></p>
+      <p class="cook-user"><%= link_to user.name, user_path(user) %>さんが開発</p>
     </div>
   </div>
 </li>
