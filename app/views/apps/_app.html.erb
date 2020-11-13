@@ -10,7 +10,7 @@
     <div class="col-md-8">
       <h3 class="app-name"><%= link_to app.name, app_path(app) %></h3>
       <div class="app-description"><%= app.description %></div><br>
-      <div class="app-user">developed by <%= link_to app.user.name, user_path(app.user) %></div>
+      <div class="app-user"><%= link_to app.user.name, user_path(app.user) %>さんが開発</div>
       <div class="app-other-info">
         <div class="app-times">開発ログ：<%= app.logs.count %>更新　</div>
         <span class="period">開発日数：<%= app.period %>日　</span>
