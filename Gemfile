@@ -73,8 +73,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'ransack'
 
 group :production do
-  gem 'rails_12factor'
+  # gem 'rails_12factor'
   gem 'fog', '1.42'
+  gem 'unicorn', '5.4.1'
 end
 
 gem 'devise'
