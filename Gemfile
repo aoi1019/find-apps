@@ -82,4 +82,3 @@ gem 'bootstrap-sass'
 gem 'faker'
 gem 'jquery-rails', '4.3.1'
 gem "aws-sdk-s3", require: false
-
