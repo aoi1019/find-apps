@@ -20,9 +20,6 @@ default: &default
 development:
   <<: *default
   database: find-apps_development
-  username: root
-  password: <%= ENV['DATABASE_PASSWORD'] %>
-  socket: /tmp/mysql.sock
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
@@ -53,5 +50,6 @@ test:
 production:
   <<: *default
   database: find-apps_production
-  username: find-apps
-  password: <%= ENV['FIND-APPS_DATABASE_PASSWORD'] %>
+  username: root
+  password: <%= ENV['DATABASE_PASSWORD'] %>
+  socket: /tmp/mysql.sock
