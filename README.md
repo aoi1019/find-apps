@@ -2,6 +2,10 @@
 ■アプリURL<br>
 https://find-apps.herokuapp.com/
 
+## テスト用ログイン
+- メールアドレス：recruit@sample.com
+- パスワード：password
+
 # アプリケーションの概要
 - 駆け出しエンジニアがオリジナルアプリをシェアするサービス。
 - 全国の駆け出しエンジニアが必ず参考にするサービスにしたい。
@@ -29,7 +33,7 @@ https://find-apps.herokuapp.com/
 - Sass
 
 ## データベース
-- Mysql
+- MYSQL
 
 # 今後解決したい課題
 - よりモダンなデザインに仕上げたい。
