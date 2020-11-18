@@ -1,19 +1,20 @@
 # Find Apps
 [![Image from Gyazo](https://i.gyazo.com/9682e86d8230279486a71ece8b520ad6.png)](https://gyazo.com/9682e86d8230279486a71ece8b520ad6)
 
-## アプリURL<br>
-https://find-apps.herokuapp.com/
+## 🌐 アプリURL
+
+### **https://find-apps.herokuapp.com/**
 
 
-## テスト用ログイン
+### テスト用ログイン
 - メールアドレス：recruit@sample.com
 - パスワード：password
 
-# アプリケーションの概要
+## 🧠 アプリケーションの概要
 - 駆け出しエンジニアがオリジナルアプリをシェアするサービス。
 - 全国の駆け出しエンジニアが必ず参考にするサービスにしたい。
 
-# アプリケーションの機能
+## 💻 アプリケーションの機能
 - ログイン / ログアウト
 - オリジナルアプリ投稿
 - オリジナルアプリ画像投稿
@@ -24,29 +25,28 @@ https://find-apps.herokuapp.com/
 - 検索機能
 - 開発ログ機能（自分の投稿のみに作成・表示できる機能）
 
-# 制作背景
+## 📚 制作背景
 自分がオリジナルアプリを作る際に同じ駆け出しエンジニアの作ったアプリが見れるサイトがあればいいのにと感じたことがきっかけです。
+最終的には、エンジニアを欲している企業様とエンジニアになりたい人がマッチングできるアプリを目指したいと考えています。
 
-<!-- プログラミング言語や年齢・スクールなどのカテゴリーなどで検索して自分の環境に近い人が作ったオリジナルアプリを見ることができるので、かなり参考になるかと思います！ -->
-
-# 使用した技術（開発環境）
-## フレームワーク
+## 🖥 使用した技術（開発環境）
+### フレームワーク
 - Ruby on Rails 5.2.4.4
 - Bootstrap4
 - Sass
 
-## データベース
+### データベース
 - MYSQL
 
-# 今後解決したい課題
+## 📕 今後解決したい課題
 - よりモダンなデザインに仕上げたい。
 - ユーザーの情報をより設定したい。
 - 検索機能をより充実させたい。
 
 
-# テーブル設計
+## 📖 テーブル設計
 
-## users テーブル
+###  users テーブル
 
 | Column   | Type    | Options     |
 | -------- | ------- | ----------- |
@@ -64,7 +64,7 @@ https://find-apps.herokuapp.com/
 - has_many :favorites
 - has_many :comments
 
-## apps テーブル
+### apps テーブル
 
 | Column      | Type      | Options                        |
 | ----------- | --------- | ------------------------------ |
@@ -81,7 +81,7 @@ https://find-apps.herokuapp.com/
 - has_many         :favorites
 - has_many         :comments
 
-## comments テーブル
+### comments テーブル
 
 | Column  | Type       | Options                        |
 | ------- | ---------- | ------------------------------ |
@@ -94,7 +94,7 @@ https://find-apps.herokuapp.com/
 - belongs_to :app
 - belongs_to :user
 
-## favorites テーブル
+### favorites テーブル
 
 | Column  | Type       | Options                        |
 | ------- | ---------- | ------------------------------ |
@@ -106,7 +106,7 @@ https://find-apps.herokuapp.com/
 - belongs_to :app
 - belongs_to :user
 
-## relationships テーブル
+### relationships テーブル
 
 | Column   | Type       | Options                        |
 | -------- | ---------- | ------------------------------ |
@@ -118,7 +118,7 @@ https://find-apps.herokuapp.com/
 - belongs_to :follower
 - belongs_to :followed
 
-## Notificationsテーブル
+### Notificationsテーブル
 
 | Column   | Type   | Options     |
 | -------- | ------ | ----------- |
@@ -128,7 +128,7 @@ https://find-apps.herokuapp.com/
 | content | text    | null: false |
 | from_user_id | integer    | null: false |
 
-## Logsテーブル
+### Logsテーブル
 
 | Column  | Type    | Options     |
 | ------- | ------- | ----------- |
