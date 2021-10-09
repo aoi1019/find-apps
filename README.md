@@ -1,11 +1,6 @@
 # Find Apps
 [![Image from Gyazo](https://i.gyazo.com/9682e86d8230279486a71ece8b520ad6.png)](https://gyazo.com/9682e86d8230279486a71ece8b520ad6)
 
-## 🌐 アプリURL
-
-### **https://find-apps.herokuapp.com/**
-
-
 ### テスト用ログイン
 - メールアドレス：recruit@sample.com
 - パスワード：password
